@@ -1,13 +1,30 @@
-services:
+version: '3'
 
+volumes:
+  wordpress:
+  mariadb:
+
+services:
   nginx:
     build: requirements/nginx/
     container_name: nginx
+    depends_on:
+      - wordpress
+    restart: unless-stopped
 
   wordpress:
     build: requirements/wordpress/
     container_name: wordpress
+    depends_on:
+      - mariadb
+    restart: unless-stopped
 
   mariadb:
     build: requirements/mariadb/
     container_name: mariadb
+    restart: unless-stopped
+
+networks:
+  nw:
+    name: nw
+    driver: bridge
