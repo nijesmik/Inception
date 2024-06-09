@@ -1,42 +1,48 @@
-version: "3"
+# srcs/docker-compose.yml
+version: "3.8"
 
 services:
   nginx:
-    build: requirements/nginx/
+    build: ./requirements/nginx
     container_name: nginx
+    ports:
+      - "443:443"
+    volumes:
+      - ./data/certs:/etc/nginx/certs
+      - ./data/nginx:/var/log/nginx
     depends_on:
       - wordpress
-    restart: unless-stopped
-    volumes:
-      - data:/var/www/html
-    expose:
-      - "443:443"
     networks:
-      - "nw"
+      - app-network
 
   wordpress:
-    build: requirements/wordpress/
+    build: ./requirements/wordpress
     container_name: wordpress
+    environment:
+      WORDPRESS_DB_HOST: mariadb:3306
+      WORDPRESS_DB_USER: ${MYSQL_USER}
+      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
+      WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
+    volumes:
+      - ./data/wordpress:/var/www/html
     depends_on:
       - mariadb
-    restart: unless-stopped
-    volumes:
-      - data:/var/www/html
-    expose:
-      - "9000"
     networks:
-      - "nw"
+      - app-network
 
   mariadb:
-    build: requirements/mariadb/
+    build: ./requirements/mariadb
     container_name: mariadb
-    restart: unless-stopped
-    expose:
-      - "3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - ./data/db:/var/lib/mysql
     networks:
-      - "nw"
+      - app-network
 
 networks:
-  nw:
-    name: nw
+  app-network:
     driver: bridge

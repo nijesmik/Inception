@@ -1,9 +1,21 @@
+# Use the official Debian Bullseye image
 FROM debian:bullseye
 
-RUN apt-get update
-RUN apt-get install -y nginx
+# Install necessary packages
+RUN apt-get update && \
+    apt-get install -y nginx openssl && \
+    rm -rf /var/lib/apt/lists/*
 
-COPY srcs/requirements/nginx/nginx.conf /etc/nginx/sites-available/default
-COPY srcs/requirements/nginx/index.html /var/www/html/index.html
+# Copy your SSL certificate and key to the container
+# Make sure you replace these with your actual certificate and key files
+COPY ./certs/server.crt /etc/nginx/ssl/server.crt
+COPY ./certs/server.key /etc/nginx/ssl/server.key
 
+# Copy the NGINX configuration file
+COPY ./nginx.conf /etc/nginx/nginx.conf
+
+# Expose port 443 for HTTPS
 EXPOSE 443
+
+# Start NGINX
+CMD ["nginx", "-g", "daemon off;"]
