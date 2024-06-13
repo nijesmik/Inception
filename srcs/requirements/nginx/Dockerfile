@@ -1,23 +1,24 @@
 FROM	debian:buster
 
-#install all the program
+# nginx openssl 설치
 RUN apt-get update
 RUN apt-get install -y nginx openssl
 
-# nginx SSL
+# Self-signed certificate 생성
 RUN mkdir /etc/nginx/ssl
 RUN openssl req -newkey rsa:4096 -x509 -sha256 -days 365 -nodes \
     -out /etc/nginx/ssl/junmoon.crt \
     -keyout /etc/nginx/ssl/junmoon.key \
     -subj "/C=KR/ST=Seoul/L=Seoul/O=42Seoul/OU=junmoon/CN=junmoon/"
 
+# nginx config 파일 복사
 COPY ./conf/nginx.conf /etc/nginx/conf.d
 
-# nginx config
+# nginx 실행시 필요한 디렉토리 생성
 RUN mkdir -p /run/nginx
 
-#the only port allowed
+# 443 열기
 EXPOSE 443
 
-# Start nginx
+# nginx 실행
 CMD ["nginx", "-g", "daemon off;"]
