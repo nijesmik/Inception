@@ -47,13 +47,13 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /Users/moon/Dev/inception/data/mysql
+      device: /home/junmoon/data/mysql
       o: bind
   wordpress_data:
     driver: local
     driver_opts:
       type: none
-      device: /Users/moon/Dev/inception/data/wordpress
+      device: /home/junmoon/data/wordpress
       o: bind
 
 networks:
