@@ -21,6 +21,7 @@ services:
       dockerfile: Dockerfile
     volumes:
       - mariadb_data:/var/lib/mysql
+      - ./output:output
     networks:
       - network
     restart: always
