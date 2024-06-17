@@ -11,8 +11,7 @@ EXPOSE 3306
 COPY ./script/initial.sh /var/www/
 RUN chmod +x /var/www/initial.sh && \
     /var/www/initial.sh
-RUN mkdir -p /output
-RUN cat /var/www/initial.sql > /output/initial.sql
+RUN cat /var/www/initial.sql
 RUN service mysql start && mysql < /var/www/initial.sql
 
 CMD [ "mysqld", "--bind-address=0.0.0.0" ]
