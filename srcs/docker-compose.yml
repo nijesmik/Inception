@@ -41,12 +41,6 @@ services:
       - wordpress_data:/var/www/html
     networks:
       - network
-    healthcheck:
-        test: [ "CMD", "mysqladmin","ping", "-hlocalhost", "-uroot"]
-        start_interval: 1s
-        interval: 5s
-        timeout: 5s
-        retries: 3
 
 volumes:
   mariadb_data:
