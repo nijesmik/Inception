@@ -1,0 +1,5 @@
+CREATE DATABASE IF NOT EXISTS wordpress;
+CREATE USER IF NOT EXISTS 'junmoon'@'%' IDENTIFIED BY '1q2w3e4r';
+GRANT ALL PRIVILEGES ON wordpress.* TO 'junmoon'@'%';
+FLUSH PRIVILEGES;
+ALTER USER 'root'@'localhost' IDENTIFIED BY '1q2w3e4r5t';
