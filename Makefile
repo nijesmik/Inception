@@ -1,7 +1,7 @@
 .PHONY: all re down clean
 
 all:
-	@docker compose -f ./srcs/docker-compose.yml up -d --build
+	@docker compose -f ./srcs/docker-compose.yml up -d --build --progress=plain --no-cache
 
 down:
 	@docker compose -f ./srcs/docker-compose.yml down
