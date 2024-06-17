@@ -16,5 +16,5 @@ clean:
 	docker volume rm $$(docker volume ls -q);
 
 fclean: clean
-	rm -rf ./data/mysql/*
-	rm -rf ./data/wordpress/*
+	rm -rf /home/junmoon/data/mysql/*
+	rm -rf /home/junmoon/data/wordpress/*
