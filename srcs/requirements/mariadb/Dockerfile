@@ -8,7 +8,7 @@ RUN apt-get install mariadb-server -y
 EXPOSE 3306
 
 # COPY ./script/initial.sql /var/www/
-RUN service mysql start && mysqld --user=mysql --datadir=/var/lib/mysql --bootstrap << EOF && \
+RUN mysqld --user=mysql --datadir=/var/lib/mysql --bootstrap << EOF && \
     ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}'; \
     CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE}; \
     CREATE USER IF NOT EXISTS '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}'; \
