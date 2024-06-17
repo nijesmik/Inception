@@ -9,7 +9,7 @@ EXPOSE 3306
 
 # COPY ./script/initial.sql /var/www/
 COPY ./script/create_initial_sql.sh /var/www
-RUN sh ./create_initial_sql.sh
+RUN sh /var/www/create_initial_sql.sh
 RUN service mysql start && mysql < /var/www/initial.sql && rm -f /var/www/initial.sql;
 
 CMD [ "mysqld", "--bind-address=0.0.0.0" ]
