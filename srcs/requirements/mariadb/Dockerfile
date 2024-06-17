@@ -8,8 +8,7 @@ RUN apt-get install mariadb-server -y
 EXPOSE 3306
 
 # COPY ./script/initial.sql /var/www/
-COPY ./script/create_initial_sql.sh /var/www
-RUN chmod +x /var/www/create_initial_sql.sh
+COPY --chmod=777 ./script/create_initial_sql.sh /var/www
 RUN sh /var/www/create_initial_sql.sh
 RUN service mysql start && mysql < /var/www/initial.sql && rm -f /var/www/initial.sql;
 
