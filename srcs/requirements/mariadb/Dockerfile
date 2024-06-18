@@ -15,4 +15,4 @@ RUN chmod +x /var/www/initial.sh && \
 RUN cat /var/www/initial.sql
 RUN service mysql start && mysql -uroot -p < /var/www/initial.sql
 
-CMD [ "mysqld", "--bind-address=0.0.0.0" ]
+ENTRYPOINT [ "initial.sh" ]
