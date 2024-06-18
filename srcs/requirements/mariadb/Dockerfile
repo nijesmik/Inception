@@ -12,7 +12,7 @@ RUN touch /var/www/initial.sql \
 
 # Run the initial script
 RUN /var/www/initial.sh \
-    && rm /var/www/initial.sql
+    # && rm /var/www/initial.sql
 
 # Start MySQL server in the background
 CMD ["mysqld_safe"]
