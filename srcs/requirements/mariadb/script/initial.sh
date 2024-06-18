@@ -1,15 +1,25 @@
-#!bin/bash
+#!/bin/bash
 
+# Start MySQL service
 service mysql start
 
-echo "CREATE DATABASE IF NOT EXISTS $MYSQL_DATABASE;" > /var/www/initial.sql
-echo "CREATE USER IF NOT EXISTS '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';" >> /var/www/initial.sql
-echo "GRANT ALL PRIVILEGES ON $MYSQL_DATABASE.* TO '$MYSQL_USER'@'%';" >> /var/www/initial.sql
-echo "FLUSH PRIVILEGES;" >> /var/www/initial.sql
-echo "ALTER USER 'root'@'localhost' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD';" >> /var/www/initial.sql
+# Wait for MySQL to be ready
+until mysqladmin ping &>/dev/null; do
+  echo "Waiting for MySQL to be ready..."
+  sleep 2
+done
 
+# Prepare the initial SQL script
+cat <<EOF > /var/www/initial.sql
+CREATE DATABASE IF NOT EXISTS $MYSQL_DATABASE;
+CREATE USER IF NOT EXISTS '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';
+GRANT ALL PRIVILEGES ON $MYSQL_DATABASE.* TO '$MYSQL_USER'@'%';
+FLUSH PRIVILEGES;
+ALTER USER 'root'@'localhost' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD';
+EOF
+
+# Execute the initial SQL script
 mysql < /var/www/initial.sql
 
-kill $(cat /var/run/mysqld/mysqld.pid)
-
-mysqld
+# Keep the MySQL server running in the foreground
+exec mysqld
