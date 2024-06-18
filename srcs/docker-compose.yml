@@ -26,7 +26,8 @@ services:
     networks:
       - network
     restart: always
-    env_file: ".env"
+    env_file: 
+      - .env
 
   wordpress:
     container_name: wordpress
@@ -38,7 +39,8 @@ services:
     expose:
       - 9000
     restart: always
-    env_file: ".env"
+    env_file: 
+      - .env
     volumes:
       - wordpress_data:/var/www/html
     networks:

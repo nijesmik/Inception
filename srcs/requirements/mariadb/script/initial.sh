@@ -1,6 +1,4 @@
-if [ -f .env ]; then
-    source .env
-fi
+#!bin/bash
 
 service mysql start
 
