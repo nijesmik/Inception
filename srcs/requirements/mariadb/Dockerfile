@@ -13,6 +13,7 @@ RUN touch /var/www/initial.sql
 RUN chmod +x /var/www/initial.sh && \
     /var/www/initial.sh
 RUN cat /var/www/initial.sql
-RUN service mysql start && mysql < /var/www/initial.sql
+RUN service mysql start
+RUN mysql -uroot -p < /var/www/initial.sql
 
 CMD [ "mysqld", "--bind-address=0.0.0.0" ]
