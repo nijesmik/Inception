@@ -9,10 +9,6 @@ EXPOSE 3306
 
 # COPY ./script/initial.sql /var/www/
 COPY ./script/initial.sh /var/www/
-RUN touch /var/www/initial.sql
-RUN chmod +x /var/www/initial.sh && \
-    /var/www/initial.sh
-RUN cat /var/www/initial.sql
-RUN service mysql start && mysql -uroot -p < /var/www/initial.sql
+RUN chmod +x /var/www/initial.sh
 
 ENTRYPOINT [ "initial.sh" ]
