@@ -20,7 +20,7 @@ services:
       context: ./requirements/mariadb
       dockerfile: Dockerfile
     expose:
-      - 9000
+      - 3306
     volumes:
       - mariadb_data:/var/lib/mysql
     networks:
@@ -37,7 +37,7 @@ services:
       context: ./requirements/wordpress
       dockerfile: Dockerfile
     expose:
-      - 3306
+      - 9000
     restart: always
     env_file:
       - .env
