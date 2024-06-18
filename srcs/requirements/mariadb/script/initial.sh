@@ -18,8 +18,8 @@ FLUSH PRIVILEGES;
 ALTER USER 'root'@'localhost' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD';
 EOF
 
-# Execute the initial SQL script
-mysql -uroot -p < /var/www/initial.sql
+# Execute the initial SQL script with the root password
+mysql -uroot -p"$MYSQL_ROOT_PASSWORD" < /var/www/initial.sql
 
-# Keep the MySQL server running in the foreground
-exec mysqld --bind-address=0.0.0.0
+# Remove the initial SQL script file
+rm /var/www/initial.sql
