@@ -22,4 +22,4 @@ EOF
 mysql -uroot -p < /var/www/initial.sql
 
 # Keep the MySQL server running in the foreground
-exec mysqld
+exec mysqld --bind-address=0.0.0.0
