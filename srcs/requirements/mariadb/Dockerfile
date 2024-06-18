@@ -11,7 +11,7 @@ EXPOSE 3306
 
 COPY ./script/initial.sql /var/www
 
-RUN service mysql start && mysql < /var/www/initial.sql && rm -f /var/www/initial.sql;
+RUN service mysql start && mysql < /var/www/initial.sql
 
 # Run the initial script
 # RUN /var/www/initial.sh
