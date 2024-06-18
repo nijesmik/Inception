@@ -19,7 +19,7 @@ ALTER USER 'root'@'localhost' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD';
 EOF
 
 # Execute the initial SQL script
-mysql < /var/www/initial.sql
+mysql -uroot -p < /var/www/initial.sql
 
 # Keep the MySQL server running in the foreground
 exec mysqld
