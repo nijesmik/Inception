@@ -20,6 +20,3 @@ EOF
 
 # Execute the initial SQL script with the root password
 mysql -uroot -p"$MYSQL_ROOT_PASSWORD" < /var/www/initial.sql
-
-# Remove the initial SQL script file
-rm /var/www/initial.sql
