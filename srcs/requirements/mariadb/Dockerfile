@@ -7,10 +7,8 @@ RUN apt-get install mariadb-server -y
 
 EXPOSE 3306
 
-# COPY ./script/initial.sql /var/www/
 COPY ./script/initial.sh /var/www/
 RUN touch /var/www/initial.sql
 RUN chmod +x /var/www/initial.sh
 
-CMD [ "mysqld", "--bind-address=0.0.0.0" ]
-ENTRYPOINT [ "/var/www/initial.sh" ]
+CMD [ "/var/www/initial.sh" ]
