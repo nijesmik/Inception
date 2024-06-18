@@ -11,4 +11,4 @@ EXPOSE 3306
 COPY ./script/initial.sh /var/www/
 RUN chmod +x /var/www/initial.sh
 
-ENTRYPOINT [ "initial.sh" ]
+ENTRYPOINT [ "/var/www/initial.sh" ]
