@@ -1,4 +1,4 @@
-.PHONY: all re down clean
+.PHONY: all re fclean down clean
 
 all:
 	@docker compose -f ./srcs/docker-compose.yml up -d --build
@@ -6,15 +6,16 @@ all:
 down:
 	@docker compose -f ./srcs/docker-compose.yml down
 
-re:
+re: clean
 	@docker compose -f srcs/docker-compose.yml up -d --build
 
 clean:
 	@docker stop $$(docker ps -qa);
-	docker rm $$(docker ps -qa);
-	docker rmi -f $$(docker images -qa);
-	docker volume rm $$(docker volume ls -q);
+	@docker rm $$(docker ps -qa);
+	@docker rmi -f $$(docker images -qa);
+	@docker volume rm $$(docker volume ls -q);
+	@docker network rm $$(docker network ls -q);
 
 fclean: clean
-	sudo rm -rf /home/junmoon/data/mysql/*
-	sudo rm -rf /home/junmoon/data/wordpress/*
+	@sudo rm -rf /home/junmoon/data/mysql/*
+	@sudo rm -rf /home/junmoon/data/wordpress/*
