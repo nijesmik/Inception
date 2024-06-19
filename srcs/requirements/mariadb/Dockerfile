@@ -21,7 +21,7 @@ RUN apt-get install mariadb-server -y
 
 EXPOSE 3306
 
-COPY ./script/initial.sh /var/www
+COPY ./script/initial.sh /var/www/initial.sh
 RUN chmod +x /var/www/initial.sh
 
 RUN service mysql start
