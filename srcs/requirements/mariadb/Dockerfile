@@ -10,7 +10,7 @@ ARG MYSQL_PASSWORD
 ARG MYSQL_ROOT_PASSWORD
 
 RUN apt-get update
-RUN apt-get install mariadb-server -y
+RUN apt-get install mariadb-server tini -y
 
 EXPOSE 3306
 
@@ -20,5 +20,7 @@ RUN chmod +x /var/www/initial.sh
 RUN service mysql start
 
 RUN /var/www/initial.sh
+
+ENTRYPOINT ["/usr/bin/tini", "--"]
 
 CMD [ "mysqld", "--bind-address=0.0.0.0" ]

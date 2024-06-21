@@ -2,7 +2,7 @@ FROM	debian:buster
 
 # nginx openssl 설치
 RUN apt-get update
-RUN apt-get install -y nginx openssl
+RUN apt-get install -y nginx openssl tini
 
 # Self-signed certificate 생성
 RUN mkdir /etc/nginx/ssl
@@ -19,6 +19,8 @@ RUN mkdir -p /run/nginx
 
 # 443 열기
 EXPOSE 443
+
+ENTRYPOINT ["/usr/bin/tini", "--"]
 
 # nginx 실행
 CMD ["nginx", "-g", "daemon off;"]
