@@ -36,7 +36,6 @@ services:
       context: ./requirements/mariadb
       dockerfile: Dockerfile
       args:
-        - MYSQL_HOSTNAME
         - MYSQL_DATABASE
         - MYSQL_USER
         - MYSQL_PASSWORD
@@ -48,14 +47,6 @@ services:
     networks:
       - inception_network
     restart: always
-    env_file:
-      - .env
-    environment:
-      - MYSQL_HOSTNAME=${MYSQL_HOSTNAME}
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
 
   wordpress:
     container_name: wordpress
