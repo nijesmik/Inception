@@ -1,5 +1,13 @@
 # Inception
 
+## Documentation
+
+<div align='center'>
+
+[Docker Compose](./srcs/README.md)
+
+</div>
+
 ## Usage
 
 ```sh
