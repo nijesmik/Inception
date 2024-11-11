@@ -1,3 +1,7 @@
+networks:
+  inception_network: # network name
+    driver: bridge
+
 services:
   nginx:
     container_name: nginx
@@ -10,7 +14,7 @@ services:
       - wordpress_data:/var/www/html
     restart: always
     networks:
-      - network
+      - inception_network
 
   mariadb:
     container_name: mariadb
@@ -28,9 +32,9 @@ services:
     volumes:
       - mariadb_data:/var/lib/mysql
     networks:
-      - network
+      - inception_network
     restart: always
-    env_file: 
+    env_file:
       - .env
     environment:
       - MYSQL_HOSTNAME=${MYSQL_HOSTNAME}
@@ -49,12 +53,12 @@ services:
     expose:
       - 9000
     restart: always
-    env_file: 
+    env_file:
       - .env
     volumes:
       - wordpress_data:/var/www/html
     networks:
-      - network
+      - inception_network
 
 volumes:
   mariadb_data:
@@ -69,7 +73,3 @@ volumes:
       type: none
       device: /home/junmoon/data/wordpress
       o: bind
-
-networks:
-  network:
-    driver: bridge
