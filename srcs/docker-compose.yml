@@ -2,6 +2,20 @@ networks:
   inception_network: # network name
     driver: bridge
 
+volumes:
+  mariadb_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${DATA_PATH}/mysql
+  wordpress_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${DATA_PATH}/wordpress
+
 services:
   nginx:
     container_name: nginx
@@ -59,17 +73,3 @@ services:
       - wordpress_data:/var/www/html
     networks:
       - inception_network
-
-volumes:
-  mariadb_data:
-    driver: local
-    driver_opts:
-      type: none
-      device: /home/junmoon/data/mysql
-      o: bind
-  wordpress_data:
-    driver: local
-    driver_opts:
-      type: none
-      device: /home/junmoon/data/wordpress
-      o: bind
