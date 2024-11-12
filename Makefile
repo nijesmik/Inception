@@ -1,25 +1,27 @@
 .PHONY: all re fclean down clean
 
-USER = sejinkim
-DATA_PATH = /home/$(USER)/data
+DOCKER_COMPOSE_PATH = ./srcs/docker-compose.yml
+
+VOLUMES_PATH = $(HOME)/data
+MARIA_DB_VOLUME_PATH = $(VOLUMES_PATH)/mysql
+WORDPRESS_VOLUME_PATH = $(VOLUMES_PATH)/wordpress
 
 all:
-	@docker compose -f ./srcs/docker-compose.yml up -d --build
+	@mkdir -p $(MARIA_DB_VOLUME_PATH) $(WORDPRESS_VOLUME_PATH)
+	@sudo chown -R 999:999 $(MARIA_DB_VOLUME_PATH)
+	@sudo docker compose -f $(DOCKER_COMPOSE_PATH) up -d --build
 
 down:
-	@docker compose -f ./srcs/docker-compose.yml down
+	@sudo docker compose -f $(DOCKER_COMPOSE_PATH) down
 
-re:
-    @make clean
-	@make all
+re: clean all
 
-clean:
-	@docker stop $$(docker ps -qa);
-	@docker rm $$(docker ps -qa);
-	@docker rmi -f $$(docker images -qa);
-	@docker volume rm $$(docker volume ls -q);
+clean: down
+	-@sudo docker ls | awk '{print $1}' | tail -n +2 | xargs sudo docker rm -f
+	-@sudo docker image ls | awk '{print $3}' | tail -n +2 | xargs sudo docker rmi -f
+	-@sudo docker volume ls | awk '{print $2}' | tail -n +2 | xargs sudo docker volume rm
 
-fclean:
-	@make clean
-	@sudo rm -rf $(DATA_PATH)/mysql/*
-	@sudo rm -rf $(DATA_PATH)/wordpress/*
+fclean: clean
+	-@sudo docker system prune --all --force
+	-@sudo rm -rf $(MARIA_DB_VOLUME_PATH)
+	-@sudo rm -rf $(WORDPRESS_VOLUME_PATH)
