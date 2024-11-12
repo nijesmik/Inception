@@ -25,13 +25,13 @@ else
 	chmod +x wp-cli.phar
 	mv wp-cli.phar /usr/local/bin/wp
 	wp core install	--url=$DOMAIN_NAME \
-					--title="Do you think this is fun?" \
-					--admin_user=$WP_ROOT_USERNAME \
+					--title=$WP_TITLE \
+					--admin_user=$WP_ROOT_NAME \
 					--admin_password=$WP_ROOT_PASSWORD \
-					--admin_email="iam@junsang.dev" \
+					--admin_email=$WP_ROOT_EMAIL \
 					--allow-root
-	wp user create $WP_USERNAME junmoon@student.42seoul.kr \
-					--user_pass=$WP_PASSWORD \
+	wp user create $WP_USER_NAME $WP_USER_EMAIL \
+					--user_pass=$WP_USER_PASSWORD \
 					--allow-root
 fi
 

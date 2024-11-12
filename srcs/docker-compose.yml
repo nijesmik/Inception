@@ -50,7 +50,7 @@ services:
 
   wordpress:
     container_name: wordpress
-    depends_on:
+    depends_on: # depends_on is used to start the service after the service that it depends on is up.
       - mariadb
     build:
       context: ./requirements/wordpress
