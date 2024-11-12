@@ -4,7 +4,7 @@
 
 <div align='center'>
 
-[Docker Compose](./srcs/README.md)
+[**Docker Compose**](./srcs/README.md) | [**Docker**](./srcs/requirements/README.md)
 
 </div>
 
