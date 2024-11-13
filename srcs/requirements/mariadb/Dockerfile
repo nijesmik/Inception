@@ -14,11 +14,8 @@ RUN apt-get update && \
 EXPOSE 3306
 
 COPY ./script/initial.sh /var/www/initial.sh
-RUN chmod +x /var/www/initial.sh
-
-RUN service mysql start
-
-RUN /var/www/initial.sh
+RUN chmod +x /var/www/initial.sh && \
+    /var/www/initial.sh
 
 ENTRYPOINT ["/usr/bin/tini", "--"]
 
