@@ -11,7 +11,7 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
 
 # config 파일 복사
 # https://myjeeva.com/php-fpm-configuration-101.html#pool-directives
-COPY ./conf/www.conf /etc/php/7.3/fpm/pool.d/
+COPY ./conf/www.conf /etc/php/7.4/fpm/pool.d/
 
 # php-fpm7.3 실행시 필요한 디렉토리 생성
 RUN mkdir /run/php
@@ -28,5 +28,5 @@ WORKDIR /var/www/html/
 EXPOSE 9000
 
 # php-fpm7.3 실행
-CMD ["/usr/sbin/php-fpm7.3", "-F"]
+CMD ["/usr/sbin/php-fpm7.4", "-F"]
 
