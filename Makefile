@@ -17,9 +17,9 @@ down:
 re: clean all
 
 clean: down
-	-@sudo docker ls | awk '{print $1}' | tail -n +2 | xargs sudo docker rm -f
-	-@sudo docker image ls | awk '{print $3}' | tail -n +2 | xargs sudo docker rmi -f
-	-@sudo docker volume ls | awk '{print $2}' | tail -n +2 | xargs sudo docker volume rm
+	@sudo docker ps -aq | xargs -r sudo docker rm -f
+	@sudo docker image ls -q | xargs -r sudo docker rmi -f
+	@sudo docker volume ls -q | xargs -r sudo docker volume rm
 
 fclean: clean
 	-@sudo docker system prune --all --force
