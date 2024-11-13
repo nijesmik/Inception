@@ -1,4 +1,4 @@
-FROM	debian:buster
+FROM debian:bullseye
 
 # nginx openssl 설치
 RUN apt-get update && \

@@ -1,7 +1,7 @@
 # https://mariadb.com/resources/blog/how-to-install-and-run-wordpress-with-mariadb/
 # https://ninano1109.tistory.com/152
 
-FROM debian:buster
+FROM debian:bullseye
 
 ARG MYSQL_DATABASE
 ARG MYSQL_USER
