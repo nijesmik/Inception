@@ -1,4 +1,5 @@
-.PHONY: all re fclean down clean
+.PHONY: all re fclean down clean \
+		ps logs network volume
 
 DOCKER_COMPOSE_PATH = ./srcs/docker-compose.yml
 
@@ -8,7 +9,6 @@ WORDPRESS_VOLUME_PATH = $(VOLUMES_PATH)/wordpress
 
 all:
 	@mkdir -p $(MARIA_DB_VOLUME_PATH) $(WORDPRESS_VOLUME_PATH)
-	@sudo chown -R 999:999 $(MARIA_DB_VOLUME_PATH)
 	@sudo docker compose -f $(DOCKER_COMPOSE_PATH) up -d --build
 
 down:
@@ -22,6 +22,12 @@ clean: down
 	@sudo docker volume ls -q | xargs -r sudo docker volume rm
 
 fclean: clean
-	-@sudo docker system prune --all --force
-	-@sudo rm -rf $(MARIA_DB_VOLUME_PATH)
-	-@sudo rm -rf $(WORDPRESS_VOLUME_PATH)
+	@sudo docker system prune --all --force
+	@sudo rm -rf $(MARIA_DB_VOLUME_PATH)
+	@sudo rm -rf $(WORDPRESS_VOLUME_PATH)
+
+ps logs:
+	@sudo docker compose -f $(DOCKER_COMPOSE_PATH) $@
+
+network volume:
+	@sudo docker $@ ls
